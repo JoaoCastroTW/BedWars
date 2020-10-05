@@ -1,4 +1,4 @@
-package br.com.cubeland;
+package br.com.cubeland.teams;
 
 import static br.com.cubeland.messages.ChatMessages.*;
 
@@ -23,7 +23,7 @@ public class Team {
     private final int woolData;
     private boolean bed;
 
-    public Team(EnumTeams team) {
+    public Team(Teams team) {
         this.location = team.getLocation();
         this.name = team.getName();
         this.color = team.getColor();
@@ -55,7 +55,7 @@ public class Team {
         return null;
     }
 
-    public static Team getTeam(Team team, Player player) {
+    private static Team getTeam(Team team, Player player) {
         if (team.teamPlayers.contains(player)) {
             return team;
         }
@@ -73,28 +73,20 @@ public class Team {
         return null;
     }
 
-    public static Team getTeam(Team team, Block block) {
-        if (isBedLocation(team, block)) {
+    private static Team getTeam(Team team, Block block) {
+        if (isBedLocation(block)) {
             return team;
         }
 
         return null;
     }
 
-    public static boolean isBedLocation(Team team, Block block) {
+    public static boolean isBedLocation(Block block) {
         Location location = block.getLocation();
         Location upperBedLocation = getUpperBedLocation(block);
 
-        if (team.hasBed() && team.bedLocation.equals(location)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static boolean isBedLocation(Team[] teams, Block block) {
         for (Team team : teams) {
-            if (isBedLocation(team, block)) {
+            if (team.hasBed() && team.bedLocation.equals(location)) {
                 return true;
             }
         }

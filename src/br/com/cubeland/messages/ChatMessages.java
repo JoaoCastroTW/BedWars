@@ -2,7 +2,7 @@ package br.com.cubeland.messages;
 
 import static br.com.cubeland.utils.MessagesUtil.*;
 import static br.com.cubeland.utils.SoundUtils.*;
-import br.com.cubeland.Team;
+import br.com.cubeland.teams.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
