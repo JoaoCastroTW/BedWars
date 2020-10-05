@@ -2,6 +2,7 @@ package br.com.cubeland.teams;
 
 import static br.com.cubeland.messages.ChatMessages.*;
 
+import br.com.cubeland.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -16,6 +17,7 @@ import java.util.List;
 public class Team {
     private static List<Team> teams = new ArrayList<>();
     private static List<Player> players = new ArrayList<>();
+    public static List<Player> deadPlayers = new ArrayList<>();
     private List<Player> teamPlayers = new ArrayList<>();
     private final Location location;
     private final Location bedLocation;
@@ -92,7 +94,7 @@ public class Team {
         return false;
     }
 
-    public static boolean isBedLocation(Team team, Block block) {
+    private static boolean isBedLocation(Team team, Block block) {
         Location location = block.getLocation();
         Location upperBedLocation = getUpperBedLocation(block);
 
@@ -101,6 +103,39 @@ public class Team {
         }
 
         return false;
+    }
+
+    public static boolean isAlive(Player player) {
+        if (deadPlayers.contains(player)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isAlive(Team team) {
+        for (Player player : team.getTeamPlayers()) {
+            if (isAlive(player)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static int getAliveTeams() {
+        int aliveTeams = 0;
+
+        for (Team team : teams) {
+            for (Player player : team.getTeamPlayers()) {
+                if (isAlive(player)) {
+                    aliveTeams++;
+                    break;
+                }
+            }
+        }
+
+        return aliveTeams;
     }
 
     public static Location getUpperBedLocation(Block block) {

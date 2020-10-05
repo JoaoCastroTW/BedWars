@@ -1,6 +1,6 @@
 package br.com.cubeland.messages;
 
-import static br.com.cubeland.utils.MessagesUtil.*;
+import static br.com.cubeland.utils.MessageUtils.*;
 import static br.com.cubeland.utils.SoundUtils.*;
 import br.com.cubeland.teams.Team;
 import org.bukkit.Bukkit;
@@ -78,6 +78,12 @@ public class ChatMessages {
 
         Bukkit.broadcastMessage(message);
         broadcastSoundEffect(Sound.ANVIL_LAND, 20, 1);
+    }
+
+    public static void sendTeamEliminatedMessage(Team team) {
+        String message = translateColorCodes(String.format("\n&c&lEQUIPE ELIMINADA!\nO time %s%s &efoi eliminado da partida.\n ", team.getColor(), team.getName()));
+
+        Bukkit.broadcastMessage(message);
     }
 
     public static void sendBedBreakMessage(Player breaker, Block block) {
