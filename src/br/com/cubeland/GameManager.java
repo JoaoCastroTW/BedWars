@@ -4,20 +4,18 @@ import br.com.cubeland.teams.Team;
 import br.com.cubeland.teams.TeamManager;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import static br.com.cubeland.GameStatus.*;
 import static br.com.cubeland.messages.ChatMessages.*;
-import static br.com.cubeland.messages.ChatMessages.sendFinalKillMessage;
-import static br.com.cubeland.utils.SoundUtils.broadcastSoundEffect;
+import static br.com.cubeland.utils.SoundUtils.*;
 
 public class GameManager {
 
     private static GameStatus gameStatus = AWAITING_PLAYERS;
-    private static int onlinePlayers;
     private static int countdownTimer = 10;
     private static final int minPlayers = 2;
     private static final int maxPlayers = 4;
@@ -44,7 +42,7 @@ public class GameManager {
                         break;
                 }
             }
-        }.runTaskTimer(new BedWars(), 0, 20);
+        }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 0, 20);
     }
 
     public static void startMatch() {
@@ -82,13 +80,6 @@ public class GameManager {
         } else {
             spectator(player);
             sendFinalKillMessage(player);
-        }
-    }
-
-    public static void handleBedBreak(Player playerBreaker, Block block) {
-        if (Team.isBedLocation(block)) {
-            Team bedTeam = Team.getTeam(block);
-            bedTeam.breakBed(playerBreaker, block);
         }
     }
 

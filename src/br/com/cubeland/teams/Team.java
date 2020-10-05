@@ -2,6 +2,7 @@ package br.com.cubeland.teams;
 
 import static br.com.cubeland.messages.ChatMessages.*;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -74,7 +75,7 @@ public class Team {
     }
 
     private static Team getTeam(Team team, Block block) {
-        if (isBedLocation(block)) {
+        if (isBedLocation(team, block)) {
             return team;
         }
 
@@ -82,13 +83,21 @@ public class Team {
     }
 
     public static boolean isBedLocation(Block block) {
+        for (Team team : teams) {
+            if (isBedLocation(team, block)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean isBedLocation(Team team, Block block) {
         Location location = block.getLocation();
         Location upperBedLocation = getUpperBedLocation(block);
 
-        for (Team team : teams) {
-            if (team.hasBed() && team.bedLocation.equals(location)) {
-                return true;
-            }
+        if (team.hasBed() && (team.bedLocation.equals(location) || team.bedLocation.equals(upperBedLocation))) {
+            return true;
         }
 
         return false;
@@ -101,16 +110,16 @@ public class Team {
 
         switch (facing) {
             case NORTH:
-                bedUpperLocation.subtract(0, 0, 1);
-                break;
-            case EAST:
-                bedUpperLocation.add(1, 0, 0);
-                break;
-            case SOUTH:
                 bedUpperLocation.add(0, 0, 1);
                 break;
-            case WEST:
+            case EAST:
                 bedUpperLocation.subtract(1, 0, 0);
+                break;
+            case SOUTH:
+                bedUpperLocation.subtract(0, 0, 1);
+                break;
+            case WEST:
+                bedUpperLocation.add(1, 0, 0);
                 break;
         }
 

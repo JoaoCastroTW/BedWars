@@ -1,6 +1,6 @@
 package br.com.cubeland.listeners;
 
-import br.com.cubeland.GameManager;
+import br.com.cubeland.teams.TeamManager;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ public class BlockListener implements Listener {
         Block block = event.getBlock();
 
         if (block.getType().equals(Material.BED_BLOCK)) {
-            GameManager.handleBedBreak(player, block);
+            TeamManager.handleBedBreak(player, block);
         }
     }
 
