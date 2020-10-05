@@ -16,14 +16,14 @@ import static br.com.cubeland.utils.SoundUtils.broadcastSoundEffect;
 
 public class GameManager {
 
-    static GameStatus gameStatus = AWAITING_PLAYERS;
-    static int onlinePlayers;
-    static int countdownTimer = 10;
-    static final int minPlayers = 2;
-    static final int maxPlayers = 4;
+    private static GameStatus gameStatus = AWAITING_PLAYERS;
+    private static int onlinePlayers;
+    private static int countdownTimer = 10;
+    private static final int minPlayers = 2;
+    private static final int maxPlayers = 4;
 
     public static void countdown() {
-        gameStatus = STARTING;
+        setGameStatus(STARTING);
 
         new BukkitRunnable(){
             @Override
@@ -49,7 +49,7 @@ public class GameManager {
 
     public static void startMatch() {
         TeamManager.assignTeams();
-        gameStatus = IN_PROGRESS;
+        setGameStatus(IN_PROGRESS);
 
         for (Player player : Team.getPlayers()) {
             Team team = Team.getTeam(player);
