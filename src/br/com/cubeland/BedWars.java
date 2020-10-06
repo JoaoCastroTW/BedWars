@@ -11,7 +11,7 @@ public class BedWars extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerConnectionListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerInventoryListener(), this);
         getServer().getPluginManager().registerEvents(new WorldListener(), this);
         this.getCommand("admin").setExecutor(new AdminCommands());
     }
