@@ -8,12 +8,12 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import static br.com.cubeland.GameStatus.*;
 import static br.com.cubeland.messages.ChatMessages.*;
@@ -21,6 +21,7 @@ import static br.com.cubeland.messages.TitleMessages.*;
 import static br.com.cubeland.teams.Team.*;
 import static br.com.cubeland.utils.ItemUtils.getColoredArmor;
 import static br.com.cubeland.utils.MessageUtils.broadcastActionBar;
+import static br.com.cubeland.utils.MessageUtils.clearTitle;
 import static br.com.cubeland.utils.SoundUtils.*;
 
 public class GameManager {
@@ -55,7 +56,7 @@ public class GameManager {
         }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 0, 20);
     }
 
-    public static void startMatch() {
+    private static void startMatch() {
         TeamManager.assignTeams();
         setGameStatus(IN_PROGRESS);
 
@@ -83,34 +84,35 @@ public class GameManager {
 
     public static void handlePlayerDeath(Player player, Player killer) {
         Team playerTeam = Team.getTeam(player);
+        player.setHealth(player.getMaxHealth());
 
         if (playerTeam.hasBed()) {
-            player.teleport(playerTeam.getLocation());
-            player.setHealth(player.getMaxHealth());
-            sendPlayerKillMessage(player, killer);
+            spectator(player);
+            respawningPlayers.add(player);
+
+            if (killer == null) {
+                sendPlayerKillMessage(player);
+            } else {
+
+                sendPlayerKillMessage(player, killer);
+            }
+
+            handlePlayerRespawn(player, playerTeam);
         } else {
             handleFinalKill(player, killer);
         }
     }
 
-    public static void handlePlayerDeath(Player player) {
-        Team playerTeam = Team.getTeam(player);
-
-        if (playerTeam.hasBed()) {
-            player.teleport(playerTeam.getLocation());
-            player.setHealth(player.getMaxHealth());
-            sendPlayerKillMessage(player);
-        } else {
-            handleFinalKill(player, null);
-        }
-    }
-
     private static void handleFinalKill(Player player, Player killer) {
         Team playerTeam = getTeam(player);
-
         Team.deadPlayers.add(player);
-        sendFinalKillMessage(player, killer);
         spectator(player);
+
+        if (killer == null) {
+            sendFinalKillMessage(player);
+        } else {
+            sendFinalKillMessage(player, killer);
+        }
 
         if (isAlive(playerTeam)) {
             sendTeamEliminatedMessage(playerTeam);
@@ -121,23 +123,56 @@ public class GameManager {
         }
     }
 
+    private static void handlePlayerRespawn(Player player, Team team) {
+        new BukkitRunnable(){
+            int time = 5;
+            @Override
+            public void run() {
+                if (time <= 0) {
+                    this.cancel();
+                    clearTitle(player);
+                    player.setGameMode(GameMode.SURVIVAL);
+                    player.setFlying(false);
+                    player.setAllowFlight(false);
+                    respawningPlayers.remove(player);
+                    player.teleport(team.getLocation());
 
-    public static void spectator(Player player) {
-        player.setGameMode(GameMode.SPECTATOR);
+                    for (Player players : Bukkit.getOnlinePlayers()) {
+                        players.showPlayer(player);
+                    }
+
+                } else {
+                    sendRespawnTimerTitle(player, time);
+                    time--;
+                }
+            }
+        }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 0, 20);
+    }
+
+    private static void spectator(Player player) {
+        player.setGameMode(GameMode.ADVENTURE);
+        player.setAllowFlight(true);
+        player.setFlying(true);
+        player.setVelocity(new Vector(0, 0.25, 0));
+
+        for (Player players : Bukkit.getOnlinePlayers()) {
+            players.hidePlayer(player);
+        }
+
     }
 
     public static void handleVoidDamage(EntityDamageEvent event, Player player) {
         event.setCancelled(true);
         player.setFallDistance(0);
 
-        if (gameStatus.equals(AWAITING_PLAYERS) || gameStatus.equals(STARTING)) {
+        if (gameStatus.equals(AWAITING_PLAYERS) || gameStatus.equals(STARTING) || respawningPlayers.contains(player) || deadPlayers.contains(player)) {
             player.teleport(BedWarsConstants.LOBBY_LOCATION);
         } else {
-            handlePlayerDeath(player);
+            handlePlayerDeath(player, null);
         }
     }
 
-    public static void finishMatch(Player player) {
+    private static void finishMatch(Player player) {
         Bukkit.getServer().getScheduler().runTaskLater(JavaPlugin.getPlugin(BedWars.class), () -> Bukkit.shutdown(), 160);
 
         new BukkitRunnable(){

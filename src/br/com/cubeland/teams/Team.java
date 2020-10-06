@@ -16,6 +16,7 @@ public class Team {
     private static List<Team> teams = new ArrayList<>();
     private static List<Player> players = new ArrayList<>();
     public static List<Player> deadPlayers = new ArrayList<>();
+    public static List<Player> respawningPlayers = new ArrayList<>();
     private List<Player> teamPlayers = new ArrayList<>();
     private final Location location;
     private final Location bedLocation;

@@ -1,6 +1,7 @@
 package br.com.cubeland.listeners;
 
 import br.com.cubeland.GameManager;
+import br.com.cubeland.teams.Team;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +18,10 @@ public class PlayerDamageListener implements Listener {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             Player player = (Player) event.getEntity();
             Player attacker = (Player) event.getDamager();
+
+            if (Team.respawningPlayers.contains(attacker) || Team.deadPlayers.contains(attacker)) {
+                event.setCancelled(true);
+            }
 
             if (player.getHealth() - event.getDamage() < 1) {
                 event.setCancelled(true);

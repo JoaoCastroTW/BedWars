@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 public class PlayerInventoryListener implements Listener {
@@ -30,5 +31,10 @@ public class PlayerInventoryListener implements Listener {
         if (event.getItem().getItemStack().getType().equals(Material.BED)) {
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onPlayerItemDamage(PlayerItemDamageEvent event) {
+        event.setCancelled(true);
     }
 }

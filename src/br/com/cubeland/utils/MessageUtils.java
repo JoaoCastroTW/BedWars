@@ -42,4 +42,8 @@ public class MessageUtils {
         }
     }
 
+    public static void clearTitle(Player player) {
+        sendTitle(player,"", PacketPlayOutTitle.EnumTitleAction.CLEAR, 0, 0, 0);
+    }
+
 }
