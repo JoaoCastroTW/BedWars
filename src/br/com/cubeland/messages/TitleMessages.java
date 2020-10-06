@@ -11,7 +11,7 @@ public class TitleMessages {
 
     public static void sendMatchEndingTitle(Team team) {
         String title = translateColorCodes(String.format("&a&LPARTIDA FINALIZADA!"));
-        String subTitle = translateColorCodes(String.format("&eO time %s%s &evenceu a partida!", team.getColor(), team.getName()));
+        String subTitle = translateColorCodes(String.format("&eO time %s%s &evenceu a partida!", team.getColorCode(), team.getName()));
 
         broadcastTitle(title, TITLE, 10, 120, 10);
         broadcastTitle(subTitle, SUBTITLE, 10, 120, 10);

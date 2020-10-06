@@ -2,8 +2,6 @@ package br.com.cubeland.teams;
 
 import static br.com.cubeland.messages.ChatMessages.*;
 
-import br.com.cubeland.GameManager;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -22,14 +20,20 @@ public class Team {
     private final Location location;
     private final Location bedLocation;
     private final String name;
-    private final String color;
+    private final String colorCode;
+    private final int colorR;
+    private final int colorG;
+    private final int colorB;
     private final int woolData;
     private boolean bed;
 
     public Team(Teams team) {
         this.location = team.getLocation();
         this.name = team.getName();
-        this.color = team.getColor();
+        this.colorCode = team.getColorCode();
+        this.colorR = team.getColor('r');
+        this.colorG = team.getColor('g');
+        this.colorB = team.getColor('b');
         this.woolData = team.getData();
         this.bedLocation = team.getBedLocation();
         this.bed = true;
@@ -167,8 +171,21 @@ public class Team {
         return name;
     }
 
-    public String getColor() {
-        return color;
+    public String getColorCode() {
+        return colorCode;
+    }
+
+    public int getColor(char id) {
+        switch(id) {
+            case 'r':
+                return this.colorR;
+            case 'g':
+                return this.colorG;
+            case 'b':
+                return this.colorB;
+            default:
+                return 0;
+        }
     }
 
     @Nonnull
