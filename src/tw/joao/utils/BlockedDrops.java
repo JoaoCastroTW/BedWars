@@ -1,4 +1,4 @@
-package br.com.cubeland.utils;
+package tw.joao.utils;
 
 public enum BlockedDrops {
     DIAMOND_SWORD,

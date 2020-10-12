@@ -1,4 +1,4 @@
-package br.com.cubeland;
+package tw.joao;
 
 public enum GameStatus {
     AWAITING_PLAYERS ("&eAguardando jogadores"),

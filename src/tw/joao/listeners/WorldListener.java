@@ -1,6 +1,6 @@
-package br.com.cubeland.listeners;
+package tw.joao.listeners;
 
-import br.com.cubeland.teams.TeamManager;
+import tw.joao.teams.TeamManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;

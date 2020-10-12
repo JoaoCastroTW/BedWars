@@ -1,4 +1,4 @@
-package br.com.cubeland.utils;
+package tw.joao.utils;
 
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;

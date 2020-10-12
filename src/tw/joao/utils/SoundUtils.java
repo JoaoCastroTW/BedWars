@@ -1,4 +1,4 @@
-package br.com.cubeland.utils;
+package tw.joao.utils;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;

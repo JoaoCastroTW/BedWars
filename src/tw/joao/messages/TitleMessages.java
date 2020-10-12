@@ -1,9 +1,9 @@
-package br.com.cubeland.messages;
+package tw.joao.messages;
 
-import br.com.cubeland.teams.Team;
+import tw.joao.teams.Team;
 import org.bukkit.entity.Player;
 
-import static br.com.cubeland.utils.MessageUtils.*;
+import static tw.joao.utils.MessageUtils.*;
 import static net.minecraft.server.v1_8_R3.PacketPlayOutTitle.EnumTitleAction.*;
 
 

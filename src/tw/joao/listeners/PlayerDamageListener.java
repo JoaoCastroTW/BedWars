@@ -1,15 +1,13 @@
-package br.com.cubeland.listeners;
+package tw.joao.listeners;
 
-import br.com.cubeland.GameManager;
-import br.com.cubeland.teams.Team;
+import tw.joao.GameManager;
+import tw.joao.teams.Team;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-
-import static br.com.cubeland.GameStatus.AWAITING_PLAYERS;
-import static br.com.cubeland.GameStatus.STARTING;
+import tw.joao.GameStatus;
 
 public class PlayerDamageListener implements Listener {
 
@@ -39,7 +37,7 @@ public class PlayerDamageListener implements Listener {
                 GameManager.handleVoidDamage(event, player);
             }
 
-            if (GameManager.getGameStatus().equals(AWAITING_PLAYERS) || GameManager.getGameStatus().equals(STARTING)) {
+            if (GameManager.getGameStatus().equals(GameStatus.AWAITING_PLAYERS) || GameManager.getGameStatus().equals(GameStatus.STARTING)) {
                 event.setCancelled(true);
             }
         }

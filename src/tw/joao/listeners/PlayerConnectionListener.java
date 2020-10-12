@@ -1,16 +1,16 @@
-package br.com.cubeland.listeners;
+package tw.joao.listeners;
 
-import br.com.cubeland.GameManager;
+import tw.joao.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import tw.joao.GameStatus;
 
-import static br.com.cubeland.GameStatus.*;
-import static br.com.cubeland.messages.ChatMessages.sendPlayerJoinMessage;
-import static br.com.cubeland.messages.ChatMessages.sendPlayerLeaveMessage;
+import static tw.joao.messages.ChatMessages.sendPlayerJoinMessage;
+import static tw.joao.messages.ChatMessages.sendPlayerLeaveMessage;
 
 public class PlayerConnectionListener implements Listener {
 
@@ -22,7 +22,7 @@ public class PlayerConnectionListener implements Listener {
         event.setJoinMessage(null);
         sendPlayerJoinMessage(player, onlinePlayers, GameManager.getMaxPlayers());
 
-        if (GameManager.getGameStatus().equals(AWAITING_PLAYERS) && onlinePlayers == GameManager.getMinPlayers()) {
+        if (GameManager.getGameStatus().equals(GameStatus.AWAITING_PLAYERS) && onlinePlayers == GameManager.getMinPlayers()) {
             GameManager.countdown();
         }
     }
@@ -35,8 +35,8 @@ public class PlayerConnectionListener implements Listener {
         event.setQuitMessage(null);
         sendPlayerLeaveMessage(player, onlinePlayers, GameManager.getMaxPlayers());
 
-        if (GameManager.getGameStatus().equals(STARTING) && onlinePlayers < GameManager.getMaxPlayers()) {
-            GameManager.setGameStatus(AWAITING_PLAYERS);
+        if (GameManager.getGameStatus().equals(GameStatus.STARTING) && onlinePlayers < GameManager.getMaxPlayers()) {
+            GameManager.setGameStatus(GameStatus.AWAITING_PLAYERS);
         }
     }
 

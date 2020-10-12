@@ -1,4 +1,4 @@
-package br.com.cubeland;
+package tw.joao;
 
 public class SpectatorMode {
 }
