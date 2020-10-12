@@ -1,12 +1,11 @@
-package br.com.cubeland.teams;
-
-import static br.com.cubeland.messages.ChatMessages.*;
+package tw.joao.teams;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
+import tw.joao.messages.ChatMessages;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -45,11 +44,11 @@ public class Team {
     public void addPlayer(Player player) {
         this.teamPlayers.add(player);
         players.add(player);
-        sendTeamAssignedMessage(player);
+        ChatMessages.sendTeamAssignedMessage(player);
     }
 
     public void breakBed(Player player, Block block) {
-        sendBedBreakMessage(player, block);
+        ChatMessages.sendBedBreakMessage(player, block);
         this.bed = false;
     }
 

@@ -1,8 +1,8 @@
-package br.com.cubeland.messages;
+package tw.joao.messages;
 
-import static br.com.cubeland.utils.MessageUtils.*;
-import static br.com.cubeland.utils.SoundUtils.*;
-import br.com.cubeland.teams.Team;
+import static tw.joao.utils.MessageUtils.*;
+import static tw.joao.utils.SoundUtils.*;
+import tw.joao.teams.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;

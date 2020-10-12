@@ -1,6 +1,6 @@
-package br.com.cubeland.utils;
+package tw.joao.utils;
 
-import static br.com.cubeland.utils.SoundUtils.*;
+import static tw.joao.utils.SoundUtils.*;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

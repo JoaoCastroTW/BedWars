@@ -1,4 +1,4 @@
-package br.com.cubeland;
+package tw.joao;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -1,8 +1,8 @@
-package br.com.cubeland;
+package tw.joao;
 
-import br.com.cubeland.teams.Team;
-import br.com.cubeland.teams.TeamManager;
-import br.com.cubeland.utils.MessageUtils;
+import tw.joao.teams.Team;
+import tw.joao.teams.TeamManager;
+import tw.joao.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -15,24 +15,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import static br.com.cubeland.GameStatus.*;
-import static br.com.cubeland.messages.ChatMessages.*;
-import static br.com.cubeland.messages.TitleMessages.*;
-import static br.com.cubeland.teams.Team.*;
-import static br.com.cubeland.utils.ItemUtils.getColoredArmor;
-import static br.com.cubeland.utils.MessageUtils.broadcastActionBar;
-import static br.com.cubeland.utils.MessageUtils.clearTitle;
-import static br.com.cubeland.utils.SoundUtils.*;
+import static tw.joao.messages.ChatMessages.*;
+import static tw.joao.messages.TitleMessages.*;
+import static tw.joao.teams.Team.*;
+import static tw.joao.utils.ItemUtils.getColoredArmor;
+import static tw.joao.utils.MessageUtils.broadcastActionBar;
+import static tw.joao.utils.MessageUtils.clearTitle;
+import static tw.joao.utils.SoundUtils.*;
 
 public class GameManager {
 
-    private static GameStatus gameStatus = AWAITING_PLAYERS;
+    private static GameStatus gameStatus = GameStatus.AWAITING_PLAYERS;
     private static int countdownTimer = 10;
     private static final int minPlayers = 2;
     private static final int maxPlayers = 4;
 
     public static void countdown() {
-        setGameStatus(STARTING);
+        setGameStatus(GameStatus.STARTING);
 
         new BukkitRunnable(){
             @Override
@@ -58,7 +57,7 @@ public class GameManager {
 
     private static void startMatch() {
         TeamManager.assignTeams();
-        setGameStatus(IN_PROGRESS);
+        setGameStatus(GameStatus.IN_PROGRESS);
 
         for (Player player : Team.getPlayers()) {
             Team team = Team.getTeam(player);
@@ -165,7 +164,7 @@ public class GameManager {
         event.setCancelled(true);
         player.setFallDistance(0);
 
-        if (gameStatus.equals(AWAITING_PLAYERS) || gameStatus.equals(STARTING) || respawningPlayers.contains(player) || deadPlayers.contains(player)) {
+        if (gameStatus.equals(GameStatus.AWAITING_PLAYERS) || gameStatus.equals(GameStatus.STARTING) || respawningPlayers.contains(player) || deadPlayers.contains(player)) {
             player.teleport(BedWarsConstants.LOBBY_LOCATION);
         } else {
             handlePlayerDeath(player, null);

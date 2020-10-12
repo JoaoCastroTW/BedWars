@@ -1,8 +1,8 @@
-package br.com.cubeland;
+package tw.joao;
 
-import br.com.cubeland.listeners.*;
-import br.com.cubeland.utils.AdminCommands;
+import tw.joao.utils.AdminCommands;
 import org.bukkit.plugin.java.JavaPlugin;
+import tw.joao.listeners.*;
 
 public class BedWars extends JavaPlugin {
 

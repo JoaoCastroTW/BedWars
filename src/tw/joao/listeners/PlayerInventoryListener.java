@@ -1,6 +1,6 @@
-package br.com.cubeland.listeners;
+package tw.joao.listeners;
 
-import br.com.cubeland.utils.BlockedDrops;
+import tw.joao.utils.BlockedDrops;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

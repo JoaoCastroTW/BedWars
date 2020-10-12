@@ -1,4 +1,4 @@
-package br.com.cubeland.teams;
+package tw.joao.teams;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
