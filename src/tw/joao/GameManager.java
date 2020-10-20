@@ -29,6 +29,12 @@ public class GameManager {
     private static int countdownTimer = 10;
     private static final int minPlayers = 2;
     private static final int maxPlayers = 4;
+    private static final NaturalGenerator[] generators = {
+            new NaturalGenerator(NaturalGeneratorType.DIAMOND, 12, 65, 0),
+            new NaturalGenerator(NaturalGeneratorType.EMERALD, 0, 65, -12),
+            new NaturalGenerator(NaturalGeneratorType.DIAMOND, -12, 65, 0),
+            new NaturalGenerator(NaturalGeneratorType.EMERALD, 0, 65, 12),
+    };
 
     public static void countdown() {
         setGameStatus(GameStatus.STARTING);
@@ -58,14 +64,6 @@ public class GameManager {
     private static void startMatch() {
         TeamManager.assignTeams();
         setGameStatus(GameStatus.IN_PROGRESS);
-
-        NaturalGenerator[] generators = {
-                new NaturalGenerator(NaturalGeneratorType.DIAMOND, 12, 65, 0),
-                new NaturalGenerator(NaturalGeneratorType.EMERALD, 0, 65, -12),
-                new NaturalGenerator(NaturalGeneratorType.DIAMOND, -12, 65, 0),
-                new NaturalGenerator(NaturalGeneratorType.EMERALD, 0, 65, 12),
-        };
-
         Generator.startAllGenerators();
 
         for (Player player : Team.getPlayers()) {
