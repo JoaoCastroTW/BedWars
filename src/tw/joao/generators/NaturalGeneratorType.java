@@ -20,11 +20,12 @@ public enum NaturalGeneratorType {
         this.maxAmount = maxAmount;
     }
 
-    public float getDelay(int level) {
-        float[] emeraldGenerator = {10.0f, 8,0f, 6.0f};
-        float[] diamondGenerator = {10.0f, 8,0f, 6.0f};
-        float[] goldGenerator = {10.0f, 8,0f, 6.0f};
-        float[] ironGenerator = {10.0f, 8,0f, 6.0f};
+    //Valor em ticks do delay entre cada ciclo de geracao.
+    public long getDelay(int level) {
+        long[] emeraldGenerator = {200, 100, 50};
+        long[] diamondGenerator = {200, 100, 50};
+        long[] goldGenerator = {200, 100, 50};
+        long[] ironGenerator = {200, 100, 50};
 
         switch (this) {
             case EMERALD:
@@ -36,7 +37,7 @@ public enum NaturalGeneratorType {
             case IRON:
                 return ironGenerator[level-1];
             default:
-                return 100.0f;
+                return 100;
         }
     }
 

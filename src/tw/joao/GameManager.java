@@ -1,12 +1,12 @@
 package tw.joao;
 
+import org.bukkit.*;
+import tw.joao.generators.Generator;
+import tw.joao.generators.NaturalGenerator;
+import tw.joao.generators.NaturalGeneratorType;
 import tw.joao.teams.Team;
 import tw.joao.teams.TeamManager;
 import tw.joao.utils.MessageUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -58,6 +58,15 @@ public class GameManager {
     private static void startMatch() {
         TeamManager.assignTeams();
         setGameStatus(GameStatus.IN_PROGRESS);
+
+        NaturalGenerator[] generators = {
+                new NaturalGenerator(NaturalGeneratorType.DIAMOND, 12, 65, 0),
+                new NaturalGenerator(NaturalGeneratorType.EMERALD, 0, 65, -12),
+                new NaturalGenerator(NaturalGeneratorType.DIAMOND, -12, 65, 0),
+                new NaturalGenerator(NaturalGeneratorType.EMERALD, 0, 65, 12),
+        };
+
+        Generator.startAllGenerators();
 
         for (Player player : Team.getPlayers()) {
             Team team = Team.getTeam(player);
