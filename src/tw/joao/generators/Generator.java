@@ -19,7 +19,7 @@ public abstract class Generator{
     public abstract void generate();
     public abstract void upgrade();
 
-    public int getGeneratorLevel() {
+    public int getLevel() {
         return this.generatorLevel;
     }
 
