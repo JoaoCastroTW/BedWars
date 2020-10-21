@@ -3,18 +3,20 @@ package tw.joao.generators;
 import org.bukkit.Material;
 
 public enum NaturalGeneratorType {
-    EMERALD("Esmeralda", Material.EMERALD, Material.EMERALD_BLOCK, 4),
-    DIAMOND("Diamante", Material.DIAMOND, Material.DIAMOND_BLOCK, 4),
-    GOLD("Ouro", Material.GOLD_INGOT, Material.GOLD_BLOCK, 12),
-    IRON("Ferro", Material.IRON_INGOT, Material.IRON_BLOCK, 32);
+    EMERALD("Esmeralda", "&a", Material.EMERALD, Material.EMERALD_BLOCK, 4),
+    DIAMOND("Diamante", "&b", Material.DIAMOND, Material.DIAMOND_BLOCK, 4),
+    GOLD("Ouro", "&6", Material.GOLD_INGOT, Material.GOLD_BLOCK, 12),
+    IRON("Ferro", "&f", Material.IRON_INGOT, Material.IRON_BLOCK, 32);
 
     private final String name;
+    private final String color;
     private final Material material;
     private final Material icon;
     private final int maxAmount;
 
-    NaturalGeneratorType(String name, Material material, Material icon, int maxAmount) {
+    NaturalGeneratorType(String name, String color, Material material, Material icon, int maxAmount) {
         this.name = name;
+        this.color = color;
         this.material = material;
         this.icon = icon;
         this.maxAmount = maxAmount;
@@ -22,10 +24,10 @@ public enum NaturalGeneratorType {
 
     //Valor em ticks do delay entre cada ciclo de geracao.
     public long getDelay(int level) {
-        long[] emeraldGenerator = {200, 100, 50};
-        long[] diamondGenerator = {200, 100, 50};
-        long[] goldGenerator = {200, 100, 50};
-        long[] ironGenerator = {200, 100, 50};
+        long[] emeraldGenerator = {200, 100, 60};
+        long[] diamondGenerator = {200, 100, 60};
+        long[] goldGenerator = {200, 100, 60};
+        long[] ironGenerator = {200, 100, 60};
 
         switch (this) {
             case EMERALD:
@@ -43,6 +45,10 @@ public enum NaturalGeneratorType {
 
     public String getName() {
         return name;
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public Material getMaterial() {
