@@ -40,6 +40,7 @@ public class NaturalGenerator extends Generator {
         spawnGenerator();
     }
 
+    //Gambiarra temporaria, favor ignorar.
     public void startGenerator() {
         new BukkitRunnable(){
             @Override
