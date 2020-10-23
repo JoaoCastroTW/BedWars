@@ -1,5 +1,6 @@
 package tw.joao.listeners;
 
+import tw.joao.BedWarsConstants;
 import tw.joao.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -20,9 +21,9 @@ public class PlayerConnectionListener implements Listener {
         Player player = event.getPlayer();
 
         event.setJoinMessage(null);
-        sendPlayerJoinMessage(player, onlinePlayers, GameManager.getMaxPlayers());
+        sendPlayerJoinMessage(player, onlinePlayers, BedWarsConstants.MAX_PLAYERS);
 
-        if (GameManager.getGameStatus().equals(GameStatus.AWAITING_PLAYERS) && onlinePlayers == GameManager.getMinPlayers()) {
+        if (GameManager.getGameStatus().equals(GameStatus.AWAITING_PLAYERS) && onlinePlayers == BedWarsConstants.MIN_PLAYERS) {
             GameManager.countdown();
         }
     }
@@ -33,9 +34,9 @@ public class PlayerConnectionListener implements Listener {
         Player player = event.getPlayer();
 
         event.setQuitMessage(null);
-        sendPlayerLeaveMessage(player, onlinePlayers, GameManager.getMaxPlayers());
+        sendPlayerLeaveMessage(player, onlinePlayers, BedWarsConstants.MAX_PLAYERS);
 
-        if (GameManager.getGameStatus().equals(GameStatus.STARTING) && onlinePlayers < GameManager.getMaxPlayers()) {
+        if (GameManager.getGameStatus().equals(GameStatus.STARTING) && onlinePlayers < BedWarsConstants.MAX_PLAYERS) {
             GameManager.setGameStatus(GameStatus.AWAITING_PLAYERS);
         }
     }

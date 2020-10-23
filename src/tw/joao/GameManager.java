@@ -26,9 +26,7 @@ import static tw.joao.utils.SoundUtils.*;
 public class GameManager {
 
     private static GameStatus gameStatus = GameStatus.AWAITING_PLAYERS;
-    private static int countdownTimer = 10;
-    private static final int minPlayers = 2;
-    private static final int maxPlayers = 4;
+    private static int countdownTimer = BedWarsConstants.MATCH_START_COUNTDOWN;
     private static final NaturalGenerator[] generators = {
             new NaturalGenerator(NaturalGeneratorType.DIAMOND, 12, 65, 0),
             new NaturalGenerator(NaturalGeneratorType.EMERALD, 0, 65, -12),
@@ -198,14 +196,6 @@ public class GameManager {
     public static void setGameStatus(GameStatus status) {
         broadcastActionBar(MessageUtils.translateColorCodes(status.text));
         gameStatus = status;
-    }
-
-    public static int getMaxPlayers() {
-        return maxPlayers;
-    }
-
-    public static int getMinPlayers() {
-        return minPlayers;
     }
 
 }
