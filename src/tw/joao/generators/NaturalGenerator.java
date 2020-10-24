@@ -3,7 +3,6 @@ package tw.joao.generators;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -66,19 +65,10 @@ public class NaturalGenerator extends Generator {
     }
 
     public int getIdleItems() {
-        int idleItems = 0;
-
-        for (Entity entity : Bukkit.getServer().getWorld("world").getNearbyEntities(getLocation(), 4, 4, 4)) {
-            if (entity instanceof Item) {
-                Item item = (Item) entity;
-
-                if (item.getItemStack().getType().equals(material)) {
-                    idleItems += item.getItemStack().getAmount();
-                }
-            }
-        }
-
-        return idleItems;
+        return Bukkit.getServer().getWorld("world").getNearbyEntities(getLocation(), 4, 4, 4).stream()
+                .filter(entity -> entity instanceof Item && ((Item) entity).getItemStack().getType().equals(material))
+                .mapToInt(entity -> ((Item) entity).getItemStack().getAmount())
+                .sum();
     }
 
     @Override

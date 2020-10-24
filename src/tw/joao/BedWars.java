@@ -21,10 +21,8 @@ public class BedWars extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for (Entity entity : Bukkit.getWorld("world").getEntities()) {
-            if (!(entity instanceof Player)) {
-                entity.remove();
-            }
-        }
+        Bukkit.getWorld("world").getEntities().stream()
+                .filter(entity -> !(entity instanceof Player))
+                .forEach(Entity::remove);
     }
 }
