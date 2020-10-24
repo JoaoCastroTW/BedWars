@@ -88,7 +88,7 @@ public class ChatMessages {
 
     public static void sendBedBreakMessage(Player breaker, Block block) {
         Team breakerTeam = Team.getTeam(breaker);
-        Team bedTeam = Team.getTeam(block);
+        Team bedTeam = Team.getBedTeam(block);
         String message = translateColorCodes(String.format("\n%1$s&lCAMA DESTRUÍDA!\n&eA cama do time %s%s &efoi destruída pelo time %s%s&e!\n ", bedTeam.getColorCode(), bedTeam.getName(), breakerTeam.getColorCode(), breakerTeam.getName()));
 
         Bukkit.broadcastMessage(message);

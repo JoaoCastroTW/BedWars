@@ -6,7 +6,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
 import tw.joao.messages.ChatMessages;
-
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,94 +51,47 @@ public class Team {
         this.bed = false;
     }
 
+    public boolean hasPlayer(Player player) {
+        return teamPlayers.contains(player);
+    }
+
     public static Team getTeam(Player player) {
-        for (Team team : teams) {
-            if (getTeam(team, player) != null) {
-                return team;
-            }
-        }
-
-        return null;
+        return teams.stream()
+                .filter(team -> team.hasPlayer(player))
+                .findAny()
+                .orElse(null);
     }
 
-    private static Team getTeam(Team team, Player player) {
-        if (team.teamPlayers.contains(player)) {
-            return team;
-        }
+    public static Team getBedTeam(Block bed) {
+        Location location = bed.getLocation();
+        Location upperBedLocation = getUpperBedLocation(bed);
 
-        return null;
-    }
-
-    public static Team getTeam(Block block) {
-        for (Team team : teams) {
-            if (getTeam(team, block) != null) {
-                return team;
-            }
-        }
-
-        return null;
-    }
-
-    private static Team getTeam(Team team, Block block) {
-        if (isBedLocation(team, block)) {
-            return team;
-        }
-
-        return null;
+        return teams.stream()
+                .filter(team -> team.bedLocation.equals(location) || team.bedLocation.equals(upperBedLocation))
+                .findAny()
+                .orElse(null);
     }
 
     public static boolean isBedLocation(Block block) {
-        for (Team team : teams) {
-            if (isBedLocation(team, block)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static boolean isBedLocation(Team team, Block block) {
         Location location = block.getLocation();
         Location upperBedLocation = getUpperBedLocation(block);
 
-        if (team.hasBed() && (team.bedLocation.equals(location) || team.bedLocation.equals(upperBedLocation))) {
-            return true;
-        }
-
-        return false;
+        return teams.stream()
+                .anyMatch(team -> team.hasBed() && (team.getBedLocation().equals(location) || team.getBedLocation().equals(upperBedLocation)));
     }
 
     public static boolean isAlive(Player player) {
-        if (deadPlayers.contains(player)) {
-            return false;
-        }
-
-        return true;
+        return !deadPlayers.contains(player);
     }
 
     public static boolean isAlive(Team team) {
-        for (Player player : team.getTeamPlayers()) {
-            if (isAlive(player)) {
-                return true;
-            }
-        }
-
-        return false;
+        return team.getTeamPlayers().stream().anyMatch(Team::isAlive);
     }
 
     public static int getAliveTeams() {
-        int aliveTeams = 0;
-
-        for (Team team : teams) {
-            for (Player player : team.getTeamPlayers()) {
-                if (isAlive(player)) {
-                    aliveTeams++;
-                    break;
-                }
-            }
-        }
-
-        return aliveTeams;
+        return (int) teams.stream()
+                .filter(Team::isAlive)
+                .count();
     }
 
     public static Location getUpperBedLocation(Block block) {
@@ -191,7 +143,9 @@ public class Team {
     @Nonnull
     public Location getLocation() { return location; }
 
-    public Location getBedLocation() { return bedLocation; }
+    public Location getBedLocation() {
+        return bedLocation;
+    }
 
     public int getWoolData() { return woolData; }
 
