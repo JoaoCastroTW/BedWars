@@ -5,7 +5,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,7 +147,6 @@ public class Team {
         }
     }
 
-    @Nonnull
     public Location getLocation() { return location; }
 
     public Location getBedLocation() {

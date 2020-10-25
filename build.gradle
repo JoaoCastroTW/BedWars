@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group 'tw.joao'
+version '1.0-alpha'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+}
