@@ -5,10 +5,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
-import tw.joao.messages.ChatMessages;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+
+import static tw.joao.messages.ChatMessages.*;
 
 public class Team {
     private static List<Team> teams = new ArrayList<>();
@@ -43,11 +44,11 @@ public class Team {
     public void addPlayer(Player player) {
         this.teamPlayers.add(player);
         players.add(player);
-        ChatMessages.sendTeamAssignedMessage(player);
+        sendTeamAssignedMessage(player);
     }
 
     public void breakBed(Player player, Block block) {
-        ChatMessages.sendBedBreakMessage(player, block);
+        sendBedBreakMessage(player, block);
         this.bed = false;
     }
 
