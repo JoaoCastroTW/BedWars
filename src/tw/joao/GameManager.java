@@ -118,8 +118,8 @@ public class GameManager {
             sendFinalKillMessage(player, killer);
         }
 
-        if (playerTeam.isAlive()) {
-            sendTeamEliminatedMessage(playerTeam);
+        if (playerTeam.isAlive() && deadPlayers.containsAll(playerTeam.getTeamPlayers())) {
+            playerTeam.eliminate();
         }
 
         if (getAliveTeams() == 1) {

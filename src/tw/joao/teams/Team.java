@@ -54,6 +54,11 @@ public class Team {
         this.bed = false;
     }
 
+    public void eliminate() {
+        this.alive = false;
+        sendTeamEliminatedMessage(this);
+    }
+
     public boolean hasPlayer(Player player) {
         return teamPlayers.contains(player);
     }
