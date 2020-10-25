@@ -1,5 +1,6 @@
 package tw.joao.generators;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,16 +14,16 @@ import tw.joao.BedWars;
 import static tw.joao.messages.HologramMessages.*;
 
 public class NaturalGenerator extends Generator {
-    private final NaturalGeneratorType type;
-    private final Location location;
-    private final String name;
-    private final String color;
-    private final Material material;
-    private final Material icon;
-    private final int maxAmount;
-    private int level;
-    private long delay;
-    private long currentCooldown;
+    @Getter private final NaturalGeneratorType type;
+    @Getter private final Location location;
+    @Getter private final String name;
+    @Getter private final String color;
+    @Getter private final Material material;
+    @Getter private final Material icon;
+    @Getter private final int maxAmount;
+    @Getter private int level;
+    @Getter private long delay;
+    @Getter private long currentCooldown;
 
     public NaturalGenerator(NaturalGeneratorType type, int x, int y, int z) {
         this.type = type;
@@ -88,29 +89,5 @@ public class NaturalGenerator extends Generator {
     public void upgrade() {
         this.level++;
         this.delay = type.getDelay(level);
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public long getDelay() {
-        return delay;
-    }
-
-    public long getCurrentCooldown() {
-        return currentCooldown;
     }
 }

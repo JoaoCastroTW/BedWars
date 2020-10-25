@@ -1,5 +1,6 @@
 package tw.joao.teams;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -15,17 +16,18 @@ public class Team {
     private static List<Player> players = new ArrayList<>();
     public static List<Player> deadPlayers = new ArrayList<>();
     public static List<Player> respawningPlayers = new ArrayList<>();
-    private List<Player> teamPlayers = new ArrayList<>();
-    private final Location location;
-    private final Location bedLocation;
-    private final String name;
-    private final String colorCode;
-    private final int colorR;
-    private final int colorG;
-    private final int colorB;
-    private final int woolData;
-    private boolean bed;
-    private boolean alive;
+
+    @Getter private List<Player> teamPlayers = new ArrayList<>();
+    @Getter private final Location location;
+    @Getter private final Location bedLocation;
+    @Getter private final String name;
+    @Getter private final String colorCode;
+    @Getter private final int colorR;
+    @Getter private final int colorG;
+    @Getter private final int colorB;
+    @Getter private final int woolData;
+    @Getter private boolean withBed;
+    @Getter private boolean alive;
 
     public Team(Teams team) {
         this.location = team.getLocation();
@@ -36,21 +38,21 @@ public class Team {
         this.colorB = team.getColor('b');
         this.woolData = team.getData();
         this.bedLocation = team.getBedLocation();
-        this.bed = true;
+        this.withBed = true;
         this.alive = true;
 
         teams.add(this);
     }
 
     public void addPlayer(Player player) {
-        this.teamPlayers.add(player);
+        teamPlayers.add(player);
         players.add(player);
         sendTeamAssignedMessage(player);
     }
 
     public void breakBed(Player player, Block block) {
         sendBedBreakMessage(player, block);
-        this.bed = false;
+        this.withBed = false;
     }
 
     public void eliminate() {
@@ -60,10 +62,6 @@ public class Team {
 
     public boolean hasPlayer(Player player) {
         return teamPlayers.contains(player);
-    }
-
-    public boolean isAlive() {
-        return alive;
     }
 
     public static Team getTeam(Player player) {
@@ -88,7 +86,7 @@ public class Team {
         Location upperBedLocation = getUpperBedLocation(block);
 
         return teams.stream()
-                .anyMatch(team -> team.hasBed() && (team.getBedLocation().equals(location) || team.getBedLocation().equals(upperBedLocation)));
+                .anyMatch(team -> team.isWithBed() && (team.getBedLocation().equals(location) || team.getBedLocation().equals(upperBedLocation)));
     }
 
     public static boolean isAlive(Player player) {
@@ -124,16 +122,6 @@ public class Team {
         return bedUpperLocation;
     }
 
-    public boolean hasBed() { return bed; }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getColorCode() {
-        return colorCode;
-    }
-
     public int getColor(char id) {
         switch(id) {
             case 'r':
@@ -146,16 +134,6 @@ public class Team {
                 return 0;
         }
     }
-
-    public Location getLocation() { return location; }
-
-    public Location getBedLocation() {
-        return bedLocation;
-    }
-
-    public int getWoolData() { return woolData; }
-
-    public List<Player> getTeamPlayers() { return teamPlayers; }
 
     public static List<Team> getTeams() { return teams; }
 

@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 public class TeamManager {
 
-    static final HashSet<Team> teams = new HashSet<>();
+    private static final HashSet<Team> teams = new HashSet<>();
 
     public static void registerTeams() {
         teams.add(new Team(Teams.RED));
