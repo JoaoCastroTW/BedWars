@@ -1,5 +1,6 @@
 package tw.joao.generators;
 
+import lombok.Getter;
 import org.bukkit.Material;
 
 public enum NaturalGeneratorType {
@@ -8,11 +9,11 @@ public enum NaturalGeneratorType {
     GOLD("Ouro", "&6", Material.GOLD_INGOT, Material.GOLD_BLOCK, 12),
     IRON("Ferro", "&f", Material.IRON_INGOT, Material.IRON_BLOCK, 32);
 
-    private final String name;
-    private final String color;
-    private final Material material;
-    private final Material icon;
-    private final int maxAmount;
+    @Getter private final String name;
+    @Getter private final String color;
+    @Getter private final Material material;
+    @Getter private final Material icon;
+    @Getter private final int maxAmount;
 
     NaturalGeneratorType(String name, String color, Material material, Material icon, int maxAmount) {
         this.name = name;
@@ -41,25 +42,5 @@ public enum NaturalGeneratorType {
             default:
                 return 100;
         }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public Material getIcon() {
-        return icon;
-    }
-
-    public int getMaxAmount() {
-        return maxAmount;
     }
 }

@@ -90,7 +90,7 @@ public class GameManager {
         Team playerTeam = Team.getTeam(player);
         player.setHealth(player.getMaxHealth());
 
-        if (playerTeam.hasBed()) {
+        if (playerTeam.isWithBed()) {
             spectator(player);
             respawningPlayers.add(player);
 
@@ -177,7 +177,7 @@ public class GameManager {
     }
 
     private static void finishMatch(Player player) {
-        Bukkit.getServer().getScheduler().runTaskLater(JavaPlugin.getPlugin(BedWars.class), () -> Bukkit.shutdown(), 160);
+        Bukkit.getServer().getScheduler().runTaskLater(JavaPlugin.getPlugin(BedWars.class), Bukkit::shutdown, 160);
 
         new BukkitRunnable(){
             @Override
@@ -194,7 +194,7 @@ public class GameManager {
     }
 
     public static void setGameStatus(GameStatus status) {
-        broadcastActionBar(MessageUtils.translateColorCodes(status.text));
+        broadcastActionBar(MessageUtils.translateColorCodes(status.getText()));
         gameStatus = status;
     }
 
