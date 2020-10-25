@@ -118,7 +118,7 @@ public class GameManager {
             sendFinalKillMessage(player, killer);
         }
 
-        if (isAlive(playerTeam)) {
+        if (playerTeam.isAlive()) {
             sendTeamEliminatedMessage(playerTeam);
         }
 

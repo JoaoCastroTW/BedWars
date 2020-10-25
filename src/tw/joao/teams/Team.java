@@ -26,6 +26,7 @@ public class Team {
     private final int colorB;
     private final int woolData;
     private boolean bed;
+    private boolean alive;
 
     public Team(Teams team) {
         this.location = team.getLocation();
@@ -37,6 +38,7 @@ public class Team {
         this.woolData = team.getData();
         this.bedLocation = team.getBedLocation();
         this.bed = true;
+        this.alive = true;
 
         teams.add(this);
     }
@@ -54,6 +56,10 @@ public class Team {
 
     public boolean hasPlayer(Player player) {
         return teamPlayers.contains(player);
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
     public static Team getTeam(Player player) {
@@ -83,10 +89,6 @@ public class Team {
 
     public static boolean isAlive(Player player) {
         return !deadPlayers.contains(player);
-    }
-
-    public static boolean isAlive(Team team) {
-        return team.getTeamPlayers().stream().anyMatch(Team::isAlive);
     }
 
     public static int getAliveTeams() {
