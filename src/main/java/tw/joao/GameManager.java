@@ -1,5 +1,6 @@
 package tw.joao;
 
+import lombok.Getter;
 import org.bukkit.*;
 import tw.joao.generators.Generator;
 import tw.joao.generators.NaturalGenerator;
@@ -25,7 +26,7 @@ import static tw.joao.utils.SoundUtils.*;
 
 public class GameManager {
 
-    private static GameStatus gameStatus = GameStatus.AWAITING_PLAYERS;
+    @Getter private static GameStatus gameStatus = GameStatus.AWAITING_PLAYERS;
     private static int countdownTimer = BedWarsConstants.MATCH_START_COUNTDOWN;
     private static final NaturalGenerator[] generators = {
             new NaturalGenerator(NaturalGeneratorType.DIAMOND, 12, 65, 0),
@@ -187,10 +188,6 @@ public class GameManager {
         }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 0, 10);
 
         sendMatchEndingTitle(getTeam(player));
-    }
-
-    public static GameStatus getGameStatus() {
-        return gameStatus;
     }
 
     public static void setGameStatus(GameStatus status) {
