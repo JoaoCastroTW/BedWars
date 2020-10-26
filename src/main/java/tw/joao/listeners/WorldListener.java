@@ -1,5 +1,6 @@
 package tw.joao.listeners;
 
+import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 import tw.joao.teams.TeamManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +16,11 @@ public class WorldListener implements Listener {
         if (event.getWorld().getName().equalsIgnoreCase("world")) {
             TeamManager.registerTeams();
         }
+    }
+
+    @EventHandler
+    public void onAchievement(PlayerAchievementAwardedEvent event) {
+        event.setCancelled(true);
     }
 
     @EventHandler
