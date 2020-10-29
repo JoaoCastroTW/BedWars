@@ -2,9 +2,10 @@ package tw.joao;
 
 import lombok.Getter;
 import org.bukkit.*;
-import tw.joao.generators.Generator;
-import tw.joao.generators.NaturalGenerator;
-import tw.joao.generators.NaturalGeneratorType;
+import tw.joao.generator.Generator;
+import tw.joao.generator.natural.DiamondGenerator;
+import tw.joao.generator.natural.EmeraldGenerator;
+import tw.joao.generator.natural.NaturalGenerator;
 import tw.joao.teams.Team;
 import tw.joao.teams.TeamManager;
 import tw.joao.utils.MessageUtils;
@@ -29,10 +30,10 @@ public class GameManager {
     @Getter private static GameStatus gameStatus = GameStatus.AWAITING_PLAYERS;
     private static int countdownTimer = BedWarsConstants.MATCH_START_COUNTDOWN;
     private static final NaturalGenerator[] generators = {
-            new NaturalGenerator(NaturalGeneratorType.DIAMOND, 12, 65, 0),
-            new NaturalGenerator(NaturalGeneratorType.EMERALD, 0, 65, -12),
-            new NaturalGenerator(NaturalGeneratorType.DIAMOND, -12, 65, 0),
-            new NaturalGenerator(NaturalGeneratorType.EMERALD, 0, 65, 12),
+            new DiamondGenerator(12, 65, 0),
+            new EmeraldGenerator(0, 65, -12),
+            new DiamondGenerator(-12, 65, 0),
+            new EmeraldGenerator(0, 65, 12),
     };
 
     public static void countdown() {
@@ -76,9 +77,9 @@ public class GameManager {
     }
 
     private static void giveInitialItems(Player player, Team team) {
-        int r = team.getColor('r');
-        int g = team.getColor('g');
-        int b = team.getColor('b');
+        int r = team.getColorR();
+        int g = team.getColorG();
+        int b = team.getColorB();
 
         player.getInventory().setHelmet(getColoredArmor(new ItemStack(Material.LEATHER_HELMET), r, g, b));
         player.getInventory().setChestplate(getColoredArmor(new ItemStack(Material.LEATHER_CHESTPLATE), r, g, b));
@@ -154,7 +155,7 @@ public class GameManager {
         }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 0, 20);
     }
 
-    private static void spectator(Player player) {
+    public static void spectator(Player player) {
         player.setGameMode(GameMode.ADVENTURE);
         player.setAllowFlight(true);
         player.setFlying(true);
