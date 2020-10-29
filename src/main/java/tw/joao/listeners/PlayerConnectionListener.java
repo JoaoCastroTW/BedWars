@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import tw.joao.GameStatus;
+import tw.joao.scoreboard.Scoreboard;
 
 import static tw.joao.messages.ChatMessages.sendPlayerJoinMessage;
 import static tw.joao.messages.ChatMessages.sendPlayerLeaveMessage;
@@ -17,10 +18,11 @@ public class PlayerConnectionListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        int onlinePlayers = Bukkit.getOnlinePlayers().size();
         Player player = event.getPlayer();
+        int onlinePlayers = Bukkit.getOnlinePlayers().size();
 
         event.setJoinMessage(null);
+        player.teleport(BedWarsConstants.LOBBY_LOCATION);
         sendPlayerJoinMessage(player, onlinePlayers, BedWarsConstants.MAX_PLAYERS);
 
         if (GameManager.getGameStatus().equals(GameStatus.AWAITING_PLAYERS) && onlinePlayers == BedWarsConstants.MIN_PLAYERS) {
