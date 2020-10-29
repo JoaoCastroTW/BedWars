@@ -1,11 +1,14 @@
 package tw.joao.teams;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
+import tw.joao.generator.island.IslandGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,8 @@ public class Team {
     @Getter private List<Player> teamPlayers = new ArrayList<>();
     @Getter private final Location location;
     @Getter private final Location bedLocation;
+    @Getter private final Location generatorLocation;
+    @Getter private final IslandGenerator generator;
     @Getter private final String name;
     @Getter private final String colorCode;
     @Getter private final int colorR;
@@ -31,16 +36,18 @@ public class Team {
 
     public Team(Teams team) {
         this.location = team.getLocation();
+        this.bedLocation = team.getBedLocation();
+        this.generatorLocation = team.getGeneratorLocation();
         this.name = team.getName();
         this.colorCode = team.getColorCode();
         this.colorR = team.getColor('r');
         this.colorG = team.getColor('g');
         this.colorB = team.getColor('b');
         this.woolData = team.getData();
-        this.bedLocation = team.getBedLocation();
         this.withBed = true;
         this.alive = true;
 
+        this.generator = new IslandGenerator(this);
         teams.add(this);
     }
 
@@ -120,19 +127,6 @@ public class Team {
         }
 
         return bedUpperLocation;
-    }
-
-    public int getColor(char id) {
-        switch(id) {
-            case 'r':
-                return this.colorR;
-            case 'g':
-                return this.colorG;
-            case 'b':
-                return this.colorB;
-            default:
-                return 0;
-        }
     }
 
     public static List<Team> getTeams() { return teams; }
